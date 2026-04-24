@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.24)
 project(main C)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 cmake_policy(SET CMP0135 NEW)
 set(CMAKE_POLICY_VERSION_MINIMUM 3.5)
