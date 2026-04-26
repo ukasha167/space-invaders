@@ -19,7 +19,7 @@ enum State : uint8_t {
 
 const uint16_t SCREEN_WIDTH = 1000;
 const uint16_t SCREEN_HEIGHT = 700;
-const char *GAME_NAME = "Space Invaders";
+const char GAME_NAME[] = "Space Invaders";
 const uint16_t TARGET_FPS = 62;
 
 #endif
