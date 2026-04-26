@@ -19,6 +19,7 @@ typedef enum {
 } State;
 
 extern const Vector3 SHOULDER_OFFSET;
+extern const float CAMERA_GAP;
 
 extern const uint16_t TARGET_FPS;
 extern const uint16_t SCREEN_WIDTH;
