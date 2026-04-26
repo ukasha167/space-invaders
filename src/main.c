@@ -1,5 +1,6 @@
 #include "raylib.h"
 
+#include "lazer.h"
 #include "defines.h"
 #include "renderer.h"
 #include "solver.h"
@@ -22,28 +23,37 @@ int main() {
                        .projection = CAMERA_PERSPECTIVE,
                        .position = CAMERA_POSITION};
 
+    initLazer();
     initSpaceship();
 
     float dt;
     while (!WindowShouldClose()) {
         dt = GetFrameTime();
 
+        if (IsKeyPressed(KEY_SPACE)) {
+            spawnLazer(spaceship.pos, spaceship.speed);
+        }
+
+        updateLazer(dt);
         updateSpaceship(dt);
         updateCamera(&camera, spaceship.pos);
 
         BeginDrawing();
-        ClearBackground(RAYWHITE);
+        ClearBackground(BLACK);
 
         BeginMode3D(camera);
 
         DrawGrid(200, 1.0f);
-        renderSpaceship(&spaceship);
+        drawSpaceship();
+        drawLazer();
 
         EndMode3D();
-
         DrawFPS(10, 10);
-
         EndDrawing();
     }
+
+    destroyShip();
+    destroyLazer();
+
     CloseWindow();
 }
