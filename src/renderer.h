@@ -4,6 +4,6 @@
 #include "raylib.h"
 #include "spaceship.h"
 
-void renderSpaceship(const struct Spaceship *spaceship);
+void renderSpaceship(const Spaceship *spaceship);
 
 #endif
