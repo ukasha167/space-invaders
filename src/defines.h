@@ -11,6 +11,8 @@
 // LIMIT OF 4 BYTES: uint32_t = 0 - 4,294,967,295 (INCLUSIVE)
 // LIMIT OF 8 BYTES: uint64_t = 0 - 18,446,744,073,709,551,615 (INCLUSIVE)
 
+#define MAX_LAZERS_COUNT 10
+
 typedef enum {
     MENU = 0,
     STARTING,
@@ -25,6 +27,6 @@ extern const uint16_t TARGET_FPS;
 extern const uint16_t SCREEN_WIDTH;
 extern const uint16_t SCREEN_HEIGHT;
 
-extern const char GAME_NAME[15];
+extern const char GAME_NAME[];
 
 #endif
