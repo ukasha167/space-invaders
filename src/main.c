@@ -7,7 +7,7 @@ int main() {
   Image icon = LoadImage("../assets/images/icon.png");
   ImageFormat(&icon, PIXELFORMAT_UNCOMPRESSED_R8G8B8A8);
 
-  SetWindowIcon(icon);
+  SetWindowIcon(icon); // Only Linux & Windows (No MacOS Because it doesn't have icons in title bar, So this line is ignored)
   UnloadImage(icon);
 
   while (!WindowShouldClose()) {
