@@ -1,10 +1,11 @@
 #include "spaceship.h"
 #include "raylib.h"
 
-struct Spaceship spaceship;
+Spaceship spaceship;
+static Model spaceshipModel;
 
 void initSpaceship() {
-    spaceship.model = LoadModel("../assets/assets3D/models/ship.glb");
+    spaceshipModel = LoadModel("../assets/assets3D/models/ship.glb");
 
     spaceship.pos = (Vector3){0.0f, 0.0f, 0.0f};
     spaceship.speed = 5.0f;
@@ -19,4 +20,12 @@ void updateSpaceship(const float dt) {
     }
 
     spaceship.pos.z -= spaceship.speed * dt;
+}
+
+void drawSpaceship() {
+    DrawModel(spaceshipModel, spaceship.pos, spaceship.scale, WHITE);
+}
+
+void destroyShip() {
+    UnloadModel(spaceshipModel);
 }

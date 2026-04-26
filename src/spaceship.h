@@ -3,17 +3,17 @@
 
 #include "raylib.h"
 
-struct Spaceship {
+typedef struct {
     int scale;
     float speed;
     Vector3 pos;
+} Spaceship;
 
-    Model model;
-};
-
-extern struct Spaceship spaceship;
+extern Spaceship spaceship;
 
 void initSpaceship();
 void updateSpaceship(const float dt);
+void drawSpaceship();
+void destroyShip();
 
 #endif
