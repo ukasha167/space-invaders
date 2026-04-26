@@ -9,4 +9,4 @@ const uint16_t TARGET_FPS = 61;
 const uint16_t SCREEN_WIDTH = 1660;
 const uint16_t SCREEN_HEIGHT = 990;
 
-const char GAME_NAME[15] = "Space Invaders";
+const char GAME_NAME[] = "Space Invaders";
