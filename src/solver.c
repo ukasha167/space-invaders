@@ -8,8 +8,7 @@ void initSolver() {
     camera.projection = CAMERA_PERSPECTIVE;
     camera.position = CAMERA_POSITION;
 
-    initLazer();
-    initSpaceship();
+    resetGame();
 }
 
 void updateCamera(Camera3D *camera, Vector3 targetPos) {
@@ -23,13 +22,58 @@ void updateGame(const float dt) {
     }
 
     updateLazer(dt);
+    updateMeteor(dt);
     updateSpaceship(dt);
     updateCamera(&camera, spaceship.pos);
+
+    // If checkCollision returns true, the player hit a meteor
+    if (checkCollision()) {
+        resetGame();
+    }
 }
 
-void destroySolver() {
-    destroyShip();
-    destroyLazer();
+bool checkCollision() {
+    for (int i = 0; i < MAX_LAZERS_COUNT; i++) {
+        if (!lazers[i].isActive) {
+            continue;
+        }
+
+        for (int j = 0; j < MAX_METEORS_COUNT; j++) {
+            if (!meteors[j].isActive) {
+                continue;
+            }
+            if (CheckCollisionSpheres(lazers[i].pos, LAZER_RADIUS,
+                                      meteors[j].pos, METEOR_RADIUS)) {
+                lazers[i].isActive = false;
+                meteors[j].isActive = false;
+                // Add "Fun" Factor: In the future, increment score here
+            }
+        }
+    }
+
+    for (int j = 0; j < MAX_METEORS_COUNT; j++) {
+        if (!meteors[j].isActive)
+            continue;
+
+        if (CheckCollisionSpheres(spaceship.pos, SHIP_RADIUS, meteors[j].pos,
+                                  METEOR_RADIUS)) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+void freeSolver() {
+    freeShip();
+    freeLazer();
+    freeMeteor();
+}
+
+void resetGame() {
+    initLazer();
+    initMeteor();
+    initSpaceship();
 }
 
 /*
