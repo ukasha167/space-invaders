@@ -4,12 +4,17 @@ static Model lazerModel;
 Lazer lazers[MAX_LAZERS_COUNT];
 
 void initLazer() {
-    lazerModel = LoadModel("../assets/assets3D/models/laser.glb");
     for (int i = 0; i < MAX_LAZERS_COUNT; i++) {
         lazers[i].isActive = false;
-        lazers[i].speed = 5.5f;
-        lazers[i].scale = 1;
+        lazers[i].speed = 10.0f;
+        lazers[i].rotationAngle = 180.0f;
+        lazers[i].rotationAxis = (Vector3){1.0f, 0.0f, 0.0f};
+        lazers[i].scale = (Vector3){0.05f, 0.05f, 0.3f};
     }
+}
+
+void loadLazerModel() {
+    lazerModel = LoadModel("../assets/assets3D/models/laser.glb");
 }
 
 void spawnLazer(Vector3 shipPos, float shipSpeed) {
@@ -34,9 +39,10 @@ void updateLazer(const float dt) {
 void drawLazer() {
     for (int i = 0; i < MAX_LAZERS_COUNT; i++) {
         if (lazers[i].isActive == true) {
-            DrawModel(lazerModel, lazers[i].pos, lazers[i].scale, WHITE);
+            DrawModelEx(lazerModel, lazers[i].pos, lazers[i].rotationAxis,
+                        lazers[i].rotationAngle, lazers[i].scale, WHITE);
         }
     }
 }
 
-void destroyLazer() { UnloadModel(lazerModel); }
+void freeLazer() { UnloadModel(lazerModel); }

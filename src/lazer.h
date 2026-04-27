@@ -5,18 +5,21 @@
 #include "raylib.h"
 
 typedef struct {
-    int scale;
     float speed;
-    bool isActive;
+    float rotationAngle;
     Vector3 pos;
+    Vector3 scale;
+    Vector3 rotationAxis;
+    bool isActive;
 } Lazer;
 
 extern Lazer lazers[];
 
 void initLazer();
+void loadLazerModel();
 void spawnLazer(Vector3 shipPos, float shipSpeed);
 void updateLazer(const float dt);
 void drawLazer();
-void destroyLazer();
+void freeLazer();
 
 #endif
