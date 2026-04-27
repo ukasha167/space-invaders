@@ -24,7 +24,7 @@ void loadModels() {
 void renderGame() {
     BeginMode3D(camera);
 
-    DrawGrid(200, 1.0f);
+    DrawGrid(500, 1.5f);
     drawSpaceship();
     drawLazer();
     drawMeteor();
