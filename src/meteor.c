@@ -7,7 +7,7 @@ Meteor meteors[MAX_METEORS_COUNT];
 void initMeteor() {
     for (int i = 0; i < MAX_METEORS_COUNT; i++) {
         meteors[i].isActive = true;
-        meteors[i].pos = (Vector3){(float)GetRandomValue(-20, 20), 0.0f,
+        meteors[i].pos = (Vector3){(float)GetRandomValue(-10, 50), 0.0f,
                                    (float)GetRandomValue(-150, -50)};
         meteors[i].scale = (Vector3){1.0f, 1.0f, 1.0f};
         meteors[i].speed = (float)GetRandomValue(5, 15);
