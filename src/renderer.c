@@ -11,6 +11,14 @@ void initRenderer() {
                          // (No MacOS. It doesn't have icons in title bar,
                          // So this line is ignored by the GLFW)
     UnloadImage(icon);
+
+    loadModels();
+}
+
+void loadModels() {
+    loadLazerModel();
+    loadMeteorModel();
+    loadSpaceshipModel();
 }
 
 void renderGame() {
@@ -19,10 +27,11 @@ void renderGame() {
     DrawGrid(200, 1.0f);
     drawSpaceship();
     drawLazer();
+    drawMeteor();
 
     EndMode3D();
 }
 
-void destroyRenderer() {
+void freeRenderer() {
     CloseWindow();
 }

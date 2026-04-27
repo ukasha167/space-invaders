@@ -4,13 +4,15 @@
 #include "raylib.h"
 
 #include "lazer.h"
-#include "spaceship.h"
+#include "meteor.h"
 #include "solver.h"
+#include "spaceship.h"
 
 extern Camera3D camera;
 
 void initRenderer();
+void loadModels();
 void renderGame();
-void destroyRenderer();
+void freeRenderer();
 
 #endif
