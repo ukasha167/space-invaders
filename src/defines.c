@@ -1,5 +1,4 @@
 #include "defines.h"
-#include "raylib.h"
 
 // Cinematic Offset: Horizontal (1.5), Vertical (2.0), and Depth (5.0)
 const float CAMERA_GAP = 6.0f;

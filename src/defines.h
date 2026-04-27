@@ -2,7 +2,6 @@
 #define DEFINES_H
 
 #include <stdint.h>
-
 #include "raylib.h"
 
 // A LITTLE NOTE FOR EVERYONE
