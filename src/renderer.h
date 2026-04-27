@@ -2,8 +2,15 @@
 #define RENDERER_H
 
 #include "raylib.h"
-#include "spaceship.h"
 
-void renderSpaceship(const Spaceship *spaceship);
+#include "lazer.h"
+#include "spaceship.h"
+#include "solver.h"
+
+extern Camera3D camera;
+
+void initRenderer();
+void renderGame();
+void destroyRenderer();
 
 #endif
