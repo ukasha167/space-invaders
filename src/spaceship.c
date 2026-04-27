@@ -5,11 +5,13 @@ Spaceship spaceship;
 static Model spaceshipModel;
 
 void initSpaceship() {
-    spaceshipModel = LoadModel("../assets/assets3D/models/ship.glb");
-
     spaceship.pos = (Vector3){0.0f, 0.0f, 0.0f};
     spaceship.speed = 5.0f;
     spaceship.scale = 1;
+}
+
+void loadSpaceshipModel() {
+    spaceshipModel = LoadModel("../assets/assets3D/models/ship.glb");
 }
 
 void updateSpaceship(const float dt) {
@@ -26,6 +28,4 @@ void drawSpaceship() {
     DrawModel(spaceshipModel, spaceship.pos, spaceship.scale, WHITE);
 }
 
-void destroyShip() {
-    UnloadModel(spaceshipModel);
-}
+void freeShip() { UnloadModel(spaceshipModel); }

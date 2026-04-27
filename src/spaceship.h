@@ -12,8 +12,9 @@ typedef struct {
 extern Spaceship spaceship;
 
 void initSpaceship();
+void loadSpaceshipModel();
 void updateSpaceship(const float dt);
 void drawSpaceship();
-void destroyShip();
+void freeShip();
 
 #endif
