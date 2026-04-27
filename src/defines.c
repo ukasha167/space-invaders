@@ -8,4 +8,8 @@ const uint16_t TARGET_FPS = 61;
 const uint16_t SCREEN_WIDTH = 1660;
 const uint16_t SCREEN_HEIGHT = 990;
 
+const float SHIP_RADIUS = 0.8f;
+const float LAZER_RADIUS = 0.2f;
+const float METEOR_RADIUS = 1.8f;
+
 const char GAME_NAME[] = "Space Invaders";
