@@ -11,7 +11,7 @@
 // LIMIT OF 8 BYTES: uint64_t = 0 - 18,446,744,073,709,551,615 (INCLUSIVE)
 
 #define MAX_LAZERS_COUNT 20
-#define MAX_METEORS_COUNT 20
+#define MAX_METEORS_COUNT 30
 
 typedef enum {
     MENU = 0,
