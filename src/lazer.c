@@ -6,7 +6,7 @@ Lazer lazers[MAX_LAZERS_COUNT];
 void initLazer() {
     for (int i = 0; i < MAX_LAZERS_COUNT; i++) {
         lazers[i].isActive = false;
-        lazers[i].speed = 10.0f;
+        lazers[i].speed = 0.0f;
         lazers[i].rotationAngle = 180.0f;
         lazers[i].rotationAxis = (Vector3){1.0f, 0.0f, 0.0f};
         lazers[i].scale = (Vector3){0.05f, 0.05f, 0.3f};
@@ -21,7 +21,7 @@ void spawnLazer(Vector3 shipPos, float shipSpeed) {
     for (int i = 0; i < MAX_LAZERS_COUNT; i++) {
         if (lazers[i].isActive == false) {
             lazers[i].pos = shipPos;
-            lazers[i].speed += shipSpeed;
+            lazers[i].speed = 30.0f + shipSpeed;
             lazers[i].isActive = true;
             return;
         }
@@ -32,6 +32,10 @@ void updateLazer(const float dt) {
     for (int i = 0; i < MAX_LAZERS_COUNT; i++) {
         if (lazers[i].isActive == true) {
             lazers[i].pos.z -= lazers[i].speed * dt;
+
+            if (lazers[i].pos.z < -250.0f) {
+                lazers[i].isActive = false;
+            }
         }
     }
 }
