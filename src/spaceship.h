@@ -2,6 +2,8 @@
 #define SPACESHIP_H
 
 #include "raylib.h"
+#include "defines.h"
+#include "raylib.h"
 
 typedef struct {
     int scale;
