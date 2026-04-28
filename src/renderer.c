@@ -30,8 +30,8 @@ void renderGame() {
     drawMeteor();
 
     // DEBUG: Finding the playable area
-    DrawDebugBounds(MIN_VIEWABLE_X_INDEX, MAX_VIEWABLE_X_INDEX, -5.0f, 15.0f,
-                    spaceship.pos.z - MIN_VIEWABLE_X_INDEX,
+    DrawDebugBounds(MIN_VIEWABLE_X_INDEX, MAX_VIEWABLE_X_INDEX, 0.0f, 15.0f,
+                    spaceship.pos.z - MIN_VIEWABLE_Z_INDEX,
                     spaceship.pos.z + MAX_VIEWABLE_Z_INDEX, RED);
 
     EndMode3D();
