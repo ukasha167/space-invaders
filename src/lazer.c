@@ -29,11 +29,13 @@ void spawnLazer(Vector3 shipPos, float shipSpeed) {
 }
 
 void updateLazer(const float dt) {
+    float outsideBoundary = spaceship.pos.z - MIN_VIEWABLE_Z_INDEX;
+
     for (int i = 0; i < MAX_LAZERS_COUNT; i++) {
         if (lazers[i].isActive == true) {
             lazers[i].pos.z -= lazers[i].speed * dt;
 
-            if (lazers[i].pos.z < -250.0f) {
+            if (lazers[i].pos.z < outsideBoundary) {
                 lazers[i].isActive = false;
             }
         }
