@@ -29,9 +29,27 @@ void renderGame() {
     drawLazer();
     drawMeteor();
 
+    // DEBUG: Finding the playable area
+    DrawDebugBounds(MIN_VIEWABLE_X_INDEX, MAX_VIEWABLE_X_INDEX, -5.0f, 15.0f,
+                    spaceship.pos.z - MIN_VIEWABLE_X_INDEX,
+                    spaceship.pos.z + MAX_VIEWABLE_Z_INDEX, RED);
+
     EndMode3D();
 }
 
 void freeRenderer() {
     CloseWindow();
+}
+
+void DrawDebugBounds(float xMin, float xMax, float yMin, float yMax, float zMin,
+                     float zMax, Color color) {
+
+    float width = xMax - xMin;
+    float height = yMax - yMin;
+    float length = zMax - zMin;
+
+    Vector3 center = {(xMax + xMin) / 2.0f, (yMax + yMin) / 2.0f,
+                      (zMax + zMin) / 2.0f};
+
+    DrawCubeWires(center, width, height, length, color);
 }
