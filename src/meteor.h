@@ -1,9 +1,11 @@
 #ifndef METEOR_H
 #define METEOR_H
 
-#include "raylib.h"
-#include "defines.h"
 #include <stdbool.h>
+
+#include "raylib.h"
+#include "spaceship.h"
+#include "defines.h"
 
 typedef struct {
     float speed;
@@ -18,6 +20,7 @@ extern Texture2D meteorTexture;
 extern Meteor meteors[];
 
 void initMeteor();
+void spawnMeteor(const int idx);
 void loadMeteorModel();
 void updateMeteor(const float dt);
 void destroyMeteor();
