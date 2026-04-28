@@ -1,8 +1,9 @@
 #ifndef LAZER_H
 #define LAZER_H
 
-#include "defines.h"
 #include "raylib.h"
+#include "defines.h"
+#include "spaceship.h"
 
 typedef struct {
     float speed;
