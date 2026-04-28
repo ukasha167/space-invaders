@@ -10,8 +10,8 @@
 // LIMIT OF 4 BYTES: uint32_t = 0 - 4,294,967,295 (INCLUSIVE)
 // LIMIT OF 8 BYTES: uint64_t = 0 - 18,446,744,073,709,551,615 (INCLUSIVE)
 
-#define MAX_LAZERS_COUNT 20
-#define MAX_METEORS_COUNT 30
+#define MAX_LAZERS_COUNT 10
+#define MAX_METEORS_COUNT 10
 
 typedef enum {
     MENU = 0,
@@ -30,6 +30,11 @@ extern const float METEOR_RADIUS;
 extern const uint16_t TARGET_FPS;
 extern const uint16_t SCREEN_WIDTH;
 extern const uint16_t SCREEN_HEIGHT;
+
+extern const float MAX_VIEWABLE_X_INDEX;
+extern const float MIN_VIEWABLE_X_INDEX;
+extern const float MAX_VIEWABLE_Z_INDEX;
+extern const float MIN_VIEWABLE_Z_INDEX;
 
 extern const char GAME_NAME[];
 
