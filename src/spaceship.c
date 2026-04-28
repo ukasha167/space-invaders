@@ -1,5 +1,4 @@
 #include "spaceship.h"
-#include "raylib.h"
 
 Spaceship spaceship;
 static Model spaceshipModel;
@@ -22,6 +21,12 @@ void updateSpaceship(const float dt) {
     }
 
     spaceship.pos.z -= spaceship.speed * dt;
+
+    if (spaceship.pos.x < MIN_VIEWABLE_X_INDEX) {
+        spaceship.pos.x = MIN_VIEWABLE_X_INDEX;
+    } else if (spaceship.pos.x > MAX_VIEWABLE_X_INDEX) {
+        spaceship.pos.x = MAX_VIEWABLE_X_INDEX;
+    }
 }
 
 void drawSpaceship() {
