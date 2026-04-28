@@ -1,8 +1,10 @@
 #ifndef SOLVER_H
 #define SOLVER_H
 
-#include "raylib.h"
+#include <time.h>
+#include <string.h>
 
+#include "raylib.h"
 #include "lazer.h"
 #include "meteor.h"
 #include "defines.h"
