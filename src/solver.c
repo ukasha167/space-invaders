@@ -9,6 +9,7 @@ void initSolver() {
     camera.position = CAMERA_POSITION;
 
     resetGame();
+    SetRandomSeed(time(NULL));
 }
 
 void updateCamera(Camera3D *camera, Vector3 targetPos) {
@@ -46,7 +47,6 @@ bool checkCollision() {
                                       meteors[j].pos, METEOR_RADIUS)) {
                 lazers[i].isActive = false;
                 meteors[j].isActive = false;
-                // Add "Fun" Factor: In the future, increment score here
             }
         }
     }
