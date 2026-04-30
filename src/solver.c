@@ -12,9 +12,9 @@ void initSolver() {
     SetRandomSeed(time(NULL));
 }
 
-void updateCamera(Camera3D *camera, Vector3 targetPos) {
-    camera->position.z = targetPos.z + CAMERA_GAP;
-    camera->target.z = targetPos.z - 5;
+void updateCamera(Vector3 targetPos) {
+    camera.position.z = targetPos.z + CAMERA_GAP;
+    camera.target.z = targetPos.z - 5;
 }
 
 void updateGame(const float dt) {
@@ -25,9 +25,8 @@ void updateGame(const float dt) {
     updateLazer(dt);
     updateMeteor(dt);
     updateSpaceship(dt);
-    updateCamera(&camera, spaceship.pos);
+    updateCamera(spaceship.pos);
 
-    // If checkCollision returns true, the player hit a meteor
     if (checkCollision()) {
         resetGame();
     }
