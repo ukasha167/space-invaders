@@ -14,7 +14,7 @@ extern const Vector3 CAMERA_POSITION;
 extern Camera3D camera;
 
 void initSolver();
-void updateCamera(Camera3D *camera, Vector3 targetPos);
+void updateCamera(Vector3 targetPos);
 void updateGame(const float dt);
 bool checkCollision();
 void resetGame();
