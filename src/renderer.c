@@ -24,15 +24,12 @@ void loadModels() {
 void renderGame() {
     BeginMode3D(camera);
 
-    DrawGrid(500, 1.5f);
-    drawSpaceship();
+    // Order matters here too
+    drawPlayableFloor();
+
     drawLazer();
     drawMeteor();
-
-    // DEBUG: Finding the playable area
-    DrawDebugBounds(MIN_VIEWABLE_X_INDEX, MAX_VIEWABLE_X_INDEX, 0.0f, 15.0f,
-                    spaceship.pos.z - MIN_VIEWABLE_Z_INDEX,
-                    spaceship.pos.z + MAX_VIEWABLE_Z_INDEX, RED);
+    drawSpaceship();
 
     EndMode3D();
 }
@@ -41,15 +38,54 @@ void freeRenderer() {
     CloseWindow();
 }
 
-void DrawDebugBounds(float xMin, float xMax, float yMin, float yMax, float zMin,
-                     float zMax, Color color) {
+void drawPlayableFloor() {
+    float minX = MIN_VIEWABLE_X_INDEX;
+    float maxX = MAX_VIEWABLE_X_INDEX;
 
-    float width = xMax - xMin;
-    float height = yMax - yMin;
-    float length = zMax - zMin;
+    float maxZ = spaceship.pos.z + 5.0f;
+    float minZ = spaceship.pos.z - MIN_VIEWABLE_Z_INDEX;
 
-    Vector3 center = {(xMax + xMin) / 2.0f, (yMax + yMin) / 2.0f,
-                      (zMax + zMin) / 2.0f};
+    float y = -2.0f;
+    float hazeSpread = 20.0f;
 
-    DrawCubeWires(center, width, height, length, color);
+    BeginBlendMode(BLEND_ADDITIVE);
+
+    rlDisableBackfaceCulling();
+
+    rlBegin(RL_QUADS);
+
+    rlColor4ub(255, 0, 0, 60);
+    rlVertex3f(minX, y, minZ);
+    rlVertex3f(minX, y, maxZ);
+    rlVertex3f(maxX, y, maxZ);
+    rlVertex3f(maxX, y, minZ);
+
+    rlColor4ub(255, 0, 0, 0);
+    rlVertex3f(minX - hazeSpread, y, minZ);
+    rlVertex3f(minX - hazeSpread, y, maxZ);
+
+    rlColor4ub(255, 0, 0, 60);
+    rlVertex3f(minX, y, maxZ);
+    rlVertex3f(minX, y, minZ);
+
+    rlColor4ub(255, 0, 0, 60);
+    rlVertex3f(maxX, y, minZ);
+    rlVertex3f(maxX, y, maxZ);
+
+    rlColor4ub(255, 0, 0, 0);
+    rlVertex3f(maxX + hazeSpread, y, maxZ);
+    rlVertex3f(maxX + hazeSpread, y, minZ);
+
+    rlEnd();
+    rlEnableBackfaceCulling();
+
+    Vector3 leftStart = {minX, y + 0.05f, maxZ};
+    Vector3 leftEnd = {minX, y + 0.05f, minZ};
+    DrawCylinderEx(leftStart, leftEnd, 0.15f, 0.15f, 8, RED);
+
+    Vector3 rightStart = {maxX, y + 0.05f, maxZ};
+    Vector3 rightEnd = {maxX, y + 0.05f, minZ};
+    DrawCylinderEx(rightStart, rightEnd, 0.15f, 0.15f, 8, RED);
+
+    EndBlendMode();
 }
