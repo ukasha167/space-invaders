@@ -2,6 +2,7 @@
 #define DEFINES_H
 
 #include <stdint.h>
+
 #include "raylib.h"
 
 // A LITTLE NOTE FOR EVERYONE
@@ -18,7 +19,8 @@ typedef enum {
     MENU = 0,
     STARTING,
     PLAYING,
-    ENDING, OVER
+    ENDING,
+    OVER
 } State;
 
 extern const Vector3 SHOULDER_OFFSET;
