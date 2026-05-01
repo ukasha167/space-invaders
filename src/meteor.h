@@ -2,6 +2,7 @@
 #define METEOR_H
 
 #include <stdbool.h>
+#include <string.h>
 
 #include "raylib.h"
 #include "spaceship.h"
@@ -16,7 +17,6 @@ typedef struct {
     bool isActive;
 } Meteor;
 
-extern Texture2D meteorTexture;
 extern Meteor meteors[];
 
 void initMeteor();
