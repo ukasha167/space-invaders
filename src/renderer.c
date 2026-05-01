@@ -1,5 +1,9 @@
 #include "renderer.h"
 
+static Texture title;
+static Texture play;
+static Texture over;
+
 void initRenderer() {
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, GAME_NAME);
     SetTargetFPS(TARGET_FPS);
@@ -16,6 +20,20 @@ void initRenderer() {
 }
 
 void loadModels() {
+    Image img;
+
+    img = LoadImage("../assets/assets2D/images/menu-text.png");
+    title = LoadTextureFromImage(img);
+    UnloadImage(img);
+
+    img = LoadImage("../assets/assets2D/images/play-text.png");
+    play = LoadTextureFromImage(img);
+    UnloadImage(img);
+
+    img = LoadImage("../assets/assets2D/images/over-text.png");
+    over = LoadTextureFromImage(img);
+    UnloadImage(img);
+
     loadLazerModel();
     loadMeteorModel();
     loadSpaceshipModel();
@@ -34,12 +52,27 @@ void renderGame() {
 
     EndMode3D();
 
+    switch (state) {
+    case MENU:
+        DrawRectangle(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, Fade(BLACK, 0.6f));
+        DrawTexture(title, (SCREEN_WIDTH >> 1) - (title.width >> 1), 20, WHITE);
+        DrawTextureEx(play, (Vector2){(SCREEN_WIDTH >> 1) - ((int)(play.width * 0.5) >> 1), SCREEN_HEIGHT - 250}, 0.0f, 0.5f, WHITE);
+        break;
+
+    case OVER:
+        DrawRectangleGradientV(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, Fade(BLACK, 0.8f), Fade(RED, 0.4f));
+        DrawTexture(over, (SCREEN_WIDTH >> 1) - (over.width >> 1), 20, WHITE);
+        DrawTextureEx(play, (Vector2){(SCREEN_WIDTH >> 1) - ((int)(play.width * 0.5) >> 1), SCREEN_HEIGHT - 250}, 0.0f, 0.5f, WHITE);
+        break;
+
+    case STARTING:
+    case PLAYING:
+    case ENDING:
+        break;
+    }
+
     DrawFPS(10, 10);
     EndDrawing();
-}
-
-void freeRenderer() {
-    CloseWindow();
 }
 
 void drawPlayableFloor() {
@@ -92,4 +125,16 @@ void drawPlayableFloor() {
     DrawCylinderEx(rightStart, rightEnd, 0.15f, 0.15f, 8, RED);
 
     EndBlendMode();
+}
+
+void freeRenderer() {
+    UnloadTexture(title);
+    UnloadTexture(play);
+    UnloadTexture(over);
+
+    freeShip();
+    freeLazer();
+    freeMeteor();
+
+    CloseWindow();
 }

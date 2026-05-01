@@ -10,6 +10,7 @@
 #include "spaceship.h"
 
 extern Camera3D camera;
+extern State state;
 
 void initRenderer();
 void loadModels();
