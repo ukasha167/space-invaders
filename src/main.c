@@ -12,6 +12,5 @@ int main() {
         renderGame();
     }
 
-    freeSolver();
     freeRenderer();
 }
