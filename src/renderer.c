@@ -22,16 +22,20 @@ void loadModels() {
 }
 
 void renderGame() {
-    BeginMode3D(camera);
+    BeginDrawing();
+    ClearBackground(BLACK);
 
-    // Order matters here too
-    drawPlayableFloor();
+    BeginMode3D(camera);
 
     drawLazer();
     drawMeteor();
     drawSpaceship();
+    drawPlayableFloor();
 
     EndMode3D();
+
+    DrawFPS(10, 10);
+    EndDrawing();
 }
 
 void freeRenderer() {
