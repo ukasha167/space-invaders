@@ -6,11 +6,11 @@
 #include "spaceship.h"
 
 typedef struct {
-    float speed;
-    float rotationAngle;
     Vector3 pos;
     Vector3 scale;
     Vector3 rotationAxis;
+    float speed;
+    float rotationAngle;
     bool isActive;
 } Lazer;
 

@@ -9,13 +9,13 @@
 #include "defines.h"
 
 typedef struct {
+    Vector3 pos;
+    Vector3 scale;
+    Vector3 rotationAxis;
     float speed;
     float rotationAngle;
     float rotationSpeed;
     float hitTimer;
-    Vector3 pos;
-    Vector3 scale;
-    Vector3 rotationAxis;
     bool isActive;
 } Meteor;
 

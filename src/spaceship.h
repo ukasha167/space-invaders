@@ -6,9 +6,9 @@
 #include "raylib.h"
 
 typedef struct {
-    int scale;
-    float speed;
     Vector3 pos;
+    float speed;
+    int scale;
 } Spaceship;
 
 extern Spaceship spaceship;
