@@ -8,13 +8,15 @@ void initSolver() {
     camera.fovy = 48.0f;
     camera.projection = CAMERA_PERSPECTIVE;
     camera.position = CAMERA_POSITION;
+    camera.target.z = -5.0f;
 
     SetRandomSeed(time(NULL));
+    resetGame();
 }
 
 void updateCamera(Vector3 targetPos) {
     camera.position.z = targetPos.z + CAMERA_GAP;
-    camera.target.z = targetPos.z - 5;
+    camera.target.z = targetPos.z - 5.0f;
 }
 
 void updateGame(const float dt) {
@@ -69,19 +71,19 @@ bool checkCollision() {
         }
 
         for (int j = 0; j < MAX_METEORS_COUNT; j++) {
-            if (!meteors[j].isActive) {
+            if (!meteors[j].isActive || meteors[j].hitTimer > 0.0f) {
                 continue;
             }
             if (CheckCollisionSpheres(lazers[i].pos, LAZER_RADIUS,
                                       meteors[j].pos, METEOR_RADIUS)) {
-                lazers[i].isActive = false;
-                meteors[j].isActive = false;
+                    lazers[i].isActive = false;
+                    meteors[j].hitTimer = 0.20;
             }
         }
     }
 
     for (int j = 0; j < MAX_METEORS_COUNT; j++) {
-        if (!meteors[j].isActive)
+        if (!meteors[j].isActive || meteors[j].hitTimer > 0.0f)
             continue;
 
         if (CheckCollisionSpheres(spaceship.pos, SHIP_RADIUS, meteors[j].pos,
@@ -93,11 +95,7 @@ bool checkCollision() {
     return false;
 }
 
-void freeSolver() {
-    freeShip();
-    freeLazer();
-    freeMeteor();
-}
+void freeSolver() {}
 
 void resetGame() {
     initLazer();
