@@ -1,15 +1,15 @@
 #include "lazer.h"
 
 static Model lazerModel;
-Lazer lazers[MAX_LAZERS_COUNT];
+Lazer lazers;
 
 void initLazer() {
     for (int i = 0; i < MAX_LAZERS_COUNT; i++) {
-        lazers[i].isActive = false;
-        lazers[i].speed = 0.0f;
-        lazers[i].rotationAngle = 180.0f;
-        lazers[i].rotationAxis = (Vector3){1.0f, 0.0f, 0.0f};
-        lazers[i].scale = (Vector3){0.05f, 0.05f, 0.3f};
+        lazers.isActive[i] = false;
+        lazers.speed[i] = 0.0f;
+        lazers.rotationAngle[i] = 180.0f;
+        lazers.rotationAxis[i] = (Vector3){1.0f, 0.0f, 0.0f};
+        lazers.scale[i] = (Vector3){0.05f, 0.05f, 0.3f};
     }
 }
 
@@ -19,10 +19,10 @@ void loadLazerModel() {
 
 void spawnLazer(Vector3 shipPos, float shipSpeed) {
     for (int i = 0; i < MAX_LAZERS_COUNT; i++) {
-        if (lazers[i].isActive == false) {
-            lazers[i].pos = shipPos;
-            lazers[i].speed = 50.0f + shipSpeed;
-            lazers[i].isActive = true;
+        if (lazers.isActive[i] == false) {
+            lazers.pos[i] = shipPos;
+            lazers.speed[i] = 50.0f + shipSpeed;
+            lazers.isActive[i] = true;
             return;
         }
     }
@@ -32,11 +32,11 @@ void updateLazer(const float dt) {
     float outsideBoundary = spaceship.pos.z - MIN_VIEWABLE_Z_INDEX;
 
     for (int i = 0; i < MAX_LAZERS_COUNT; i++) {
-        if (lazers[i].isActive == true) {
-            lazers[i].pos.z -= lazers[i].speed * dt;
+        if (lazers.isActive[i] == true) {
+            lazers.pos[i].z -= lazers.speed[i] * dt;
 
-            if (lazers[i].pos.z < outsideBoundary) {
-                lazers[i].isActive = false;
+            if (lazers.pos[i].z < outsideBoundary) {
+                lazers.isActive[i] = false;
             }
         }
     }
@@ -44,9 +44,9 @@ void updateLazer(const float dt) {
 
 void drawLazer() {
     for (int i = 0; i < MAX_LAZERS_COUNT; i++) {
-        if (lazers[i].isActive == true) {
-            DrawModelEx(lazerModel, lazers[i].pos, lazers[i].rotationAxis,
-                        lazers[i].rotationAngle, lazers[i].scale, WHITE);
+        if (lazers.isActive[i] == true) {
+            DrawModelEx(lazerModel, lazers.pos[i], lazers.rotationAxis[i],
+                        lazers.rotationAngle[i], lazers.scale[i], WHITE);
         }
     }
 }

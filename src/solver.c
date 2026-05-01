@@ -67,28 +67,28 @@ void updateGame(const float dt) {
 
 bool checkCollision() {
     for (int i = 0; i < MAX_LAZERS_COUNT; i++) {
-        if (!lazers[i].isActive) {
+        if (!lazers.isActive[i]) {
             continue;
         }
 
         for (int j = 0; j < MAX_METEORS_COUNT; j++) {
-            if (!meteors[j].isActive || meteors[j].hitTimer > 0.0f) {
+            if (!meteors.isActive[j] || meteors.hitTimer[j] > 0.0f) {
                 continue;
             }
-            if (CheckCollisionSpheres(lazers[i].pos, LAZER_RADIUS,
-                                      meteors[j].pos, METEOR_RADIUS)) {
-                lazers[i].isActive = false;
-                meteors[j].hitTimer = 0.20;
+            if (CheckCollisionSpheres(lazers.pos[i], LAZER_RADIUS,
+                                      meteors.pos[j], METEOR_RADIUS)) {
+                lazers.isActive[i] = false;
+                meteors.hitTimer[j] = 0.20;
                 score++;
             }
         }
     }
 
     for (int j = 0; j < MAX_METEORS_COUNT; j++) {
-        if (!meteors[j].isActive || meteors[j].hitTimer > 0.0f)
+        if (!meteors.isActive[j] || meteors.hitTimer[j] > 0.0f)
             continue;
 
-        if (CheckCollisionSpheres(spaceship.pos, SHIP_RADIUS, meteors[j].pos,
+        if (CheckCollisionSpheres(spaceship.pos, SHIP_RADIUS, meteors.pos[j],
                                   METEOR_RADIUS)) {
             return true;
         }
