@@ -11,6 +11,7 @@
 
 extern Camera3D camera;
 extern State state;
+extern int score;
 
 void initRenderer();
 void loadModels();
