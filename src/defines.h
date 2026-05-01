@@ -15,6 +15,16 @@
 #define MAX_METEORS_COUNT 8
 #define MAX_METEORS_TEXTURES 6
 
+#define SHIP_RADIUS 0.8f
+#define LAZER_RADIUS 0.2f
+#define METEOR_RADIUS 1.8f
+
+#define LAZER_METEOR_RADIUS_SUM  (LAZER_RADIUS + METEOR_RADIUS)
+#define SHIP_METEOR_RADIUS_SUM   (SHIP_RADIUS  + METEOR_RADIUS)
+
+#define LAZER_METEOR_DIST_SQ     (LAZER_METEOR_RADIUS_SUM * LAZER_METEOR_RADIUS_SUM)
+#define SHIP_METEOR_DIST_SQ      (SHIP_METEOR_RADIUS_SUM  * SHIP_METEOR_RADIUS_SUM)
+
 typedef enum {
     MENU = 0,
     STARTING,
@@ -25,10 +35,6 @@ typedef enum {
 
 extern const Vector3 SHOULDER_OFFSET;
 extern const float CAMERA_GAP;
-
-extern const float SHIP_RADIUS;
-extern const float LAZER_RADIUS;
-extern const float METEOR_RADIUS;
 
 extern const uint16_t TARGET_FPS;
 extern const uint16_t SCREEN_WIDTH;
