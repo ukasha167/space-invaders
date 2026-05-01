@@ -6,7 +6,7 @@ static Texture over;
 
 void initRenderer() {
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, GAME_NAME);
-    SetTargetFPS(TARGET_FPS);
+    // SetTargetFPS(TARGET_FPS);
 
     Image icon = LoadImage("../assets/assets2D/images/icon.png");
     ImageFormat(&icon, PIXELFORMAT_UNCOMPRESSED_R8G8B8A8);
@@ -67,7 +67,7 @@ void renderGame() {
         break;
 
     case PLAYING:
-        DrawText(TextFormat("SCORE: %3d", score), SCREEN_WIDTH - 200, 10, 34, Fade(RED, 0.8f));
+        DrawText(TextFormat("SCORE: %3d", score), SCREEN_WIDTH - 200, 10, 34, Fade(RED, 0.95f));
         break;
 
     case STARTING:
