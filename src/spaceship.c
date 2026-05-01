@@ -15,9 +15,9 @@ void loadSpaceshipModel() {
 
 void updateSpaceship(const float dt) {
     if (IsKeyDown(KEY_A) || IsKeyDown(KEY_LEFT)) {
-        spaceship.pos.x -= spaceship.speed * dt;
+        spaceship.pos.x -= (spaceship.speed * 1.5f) * dt;
     } else if (IsKeyDown(KEY_D) || IsKeyDown(KEY_RIGHT)) {
-        spaceship.pos.x += spaceship.speed * dt;
+        spaceship.pos.x += (spaceship.speed * 1.5f) * dt;
     }
 
     spaceship.pos.z -= spaceship.speed * dt;
