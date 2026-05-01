@@ -19,7 +19,6 @@ void initSolver();
 void updateCamera(Vector3 targetPos);
 void updateGame(const float dt);
 bool checkCollision();
-bool collisionOccured(Vector3 a, Vector3 b, float radiiSq);
 void resetGame();
 void freeSolver();
 
