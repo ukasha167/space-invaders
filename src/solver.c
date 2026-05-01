@@ -2,6 +2,7 @@
 
 Camera3D camera;
 State state = MENU;
+int score = 0;
 
 void initSolver() {
     camera.up = (Vector3){0.0f, 1.0f, 0.0f};
@@ -76,8 +77,9 @@ bool checkCollision() {
             }
             if (CheckCollisionSpheres(lazers[i].pos, LAZER_RADIUS,
                                       meteors[j].pos, METEOR_RADIUS)) {
-                    lazers[i].isActive = false;
-                    meteors[j].hitTimer = 0.20;
+                lazers[i].isActive = false;
+                meteors[j].hitTimer = 0.20;
+                score++;
             }
         }
     }
@@ -101,4 +103,5 @@ void resetGame() {
     initLazer();
     initMeteor();
     initSpaceship();
+    score = 0;
 }
