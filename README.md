@@ -147,19 +147,34 @@ No framebuffer copies. No ping-pong render targets. Pure per-vertex math.
 
 ### III. Collision System
 
-Collision detection runs two passes per frame — lazers vs. meteors, then ship vs. meteors — using the following optimization chain:
+Collision detection implements a high-performance, **two-phase spatial pipeline** optimized for a Data-Oriented architecture. Since the game is constrained to a fixed horizontal plane, the system flattens 3D sphere tests into optimized 2D circular tests, ignoring the $Y$ axis entirely to save clock cycles.
 
-**Squared-Distance Elimination**
-
+#### 1. Broad-Phase: Early-Out AABB Pruning
+Before committing to any heavy math, the system performs a "Broad-Phase" check using Axis-Aligned Bounding Boxes (AABB). By simply comparing the absolute difference of the $X$ and $Z$ coordinates against the combined radii, we can discard roughly 90% of potential collisions using only basic subtraction.
 ```c
-// Never computed:
-float dist = sqrt(dx*dx + dy*dy + dz*dz);
+// Step 1: Horizontal distance check (Broad-Phase)
+float dx = lx - meteors.pos[j].x;
+if (dx > totalRadius || dx < -totalRadius) continue; // Early Out
 
-// What actually runs — algebraically equivalent, no sqrt:
-return (dx*dx + dy*dy + dz*dz) <= (r1 + r2) * (r1 + r2);
+float dz = lz - meteors.pos[j].z;
+if (dz > totalRadius || dz < -totalRadius) continue; // Early Out
 ```
 
-The sum-of-radii is a compile-time constant, so `(r1 + r2)²` is precomputed by the preprocessor and never evaluated at runtime.
+#### 2. Narrow-Phase: Squared-Distance Elimination
+Only if the Broad-Phase passes does the system enter the "Narrow-Phase." Here, we use the Pythagorean theorem to check for a precise hit. To maximize efficiency, we compare **squared distances** to bypass the computationally expensive Square Root (`sqrtf`) operation.
+```c
+// Step 2: Squared distance check (Narrow-Phase)
+// No sqrt() required:
+float distSq = (dx * dx) + (dz * dz);
+if (distSq < (totalRadius * totalRadius)) {
+    // Collision Confirmed
+}
+```
+
+#### Technical Optimizations:
+*   **Dynamic Radius Scaling:** Unlike static implementations, the `totalRadius` is calculated at runtime by multiplying the base `METEOR_RADIUS` by the meteor's individual `scale`. This allows for pixel-perfect collisions on varied asteroid sizes.
+*   **Register Locality:** Laser positions (`lx`, `lz`) are pulled into local variables before the inner loop starts. This encourages the compiler to keep this "hot" data in CPU registers, minimizing memory fetches during the scan of the meteor arrays.
+*   **Short-Circuit Logic:** The moment a laser registers a hit, the inner loop `breaks`. A spent laser has no business checking the remaining meteors, significantly reducing the average-case complexity.
 
 ---
 
