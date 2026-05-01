@@ -1,6 +1,7 @@
 #include "solver.h"
 
 Camera3D camera;
+State state = MENU;
 
 void initSolver() {
     camera.up = (Vector3){0.0f, 1.0f, 0.0f};
@@ -8,7 +9,6 @@ void initSolver() {
     camera.projection = CAMERA_PERSPECTIVE;
     camera.position = CAMERA_POSITION;
 
-    resetGame();
     SetRandomSeed(time(NULL));
 }
 
@@ -18,17 +18,47 @@ void updateCamera(Vector3 targetPos) {
 }
 
 void updateGame(const float dt) {
-    if (IsKeyPressed(KEY_SPACE)) {
-        spawnLazer(spaceship.pos, spaceship.speed);
-    }
+    switch (state) {
 
-    updateLazer(dt);
-    updateMeteor(dt);
-    updateSpaceship(dt);
-    updateCamera(spaceship.pos);
+    case MENU:
+        if (IsKeyPressed(KEY_SPACE)) {
+            state = STARTING;
+        }
+        break;
 
-    if (checkCollision()) {
+    case STARTING:
         resetGame();
+        if (1) {
+            state = PLAYING;
+        }
+        break;
+
+    case PLAYING:
+        if (IsKeyPressed(KEY_SPACE)) {
+            spawnLazer(spaceship.pos, spaceship.speed);
+        }
+
+        updateLazer(dt);
+        updateMeteor(dt);
+        updateSpaceship(dt);
+        updateCamera(spaceship.pos);
+
+        if (checkCollision()) {
+            state = ENDING;
+        }
+        break;
+
+    case ENDING:
+        if (1) {
+            state = OVER;
+        }
+        break;
+
+    case OVER:
+        if (IsKeyPressed(KEY_SPACE)) {
+            state = STARTING;
+        }
+        break;
     }
 }
 

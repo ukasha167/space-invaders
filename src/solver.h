@@ -12,6 +12,7 @@
 
 extern const Vector3 CAMERA_POSITION;
 extern Camera3D camera;
+extern State state;
 
 void initSolver();
 void updateCamera(Vector3 targetPos);
