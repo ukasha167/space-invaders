@@ -19,8 +19,22 @@ void spawnMeteor(const int idx) {
         (float)GetRandomValue(spaceship.pos.z - MIN_VIEWABLE_Z_INDEX / 1.5,
                               spaceship.pos.z - MIN_VIEWABLE_Z_INDEX)};
 
-    meteors[idx].speed = (float)GetRandomValue(15, 20);
-    meteors[idx].scale = (Vector3){1.0f, 1.0f, 1.0f};
+    meteors[idx].rotationAxis = (Vector3){
+            (float)GetRandomValue(-10, 10) / 10.0f,
+            (float)GetRandomValue(-10, 10) / 10.0f,
+            (float)GetRandomValue(-10, 10) / 10.0f
+        };
+
+    if (meteors[idx].rotationAxis.x == 0 && meteors[idx].rotationAxis.y == 0) {
+        meteors[idx].rotationAxis.x = 1.0f;
+    }
+
+    meteors[idx].rotationAngle = (float)GetRandomValue(0, 360);
+    meteors[idx].rotationSpeed = (float)GetRandomValue(20, 100);
+
+    float size = (float)GetRandomValue(8, 12) / 10.0f;
+    meteors[idx].scale = (Vector3){ size, size, size };
+    meteors[idx].speed = (float)GetRandomValue(15, 25) + (2.0f - size) * 5.0f;
     meteors[idx].isActive = true;
 }
 
@@ -54,6 +68,7 @@ void updateMeteor(const float dt) {
             meteors[i].hitTimer = 0.0f;
             continue;
         } else {
+            meteors[i].rotationAngle += meteors[i].rotationSpeed * dt;
             meteors[i].pos.z += meteors[i].speed * dt;
         }
 
@@ -76,7 +91,13 @@ void drawMeteor() {
         float flashVector[2] = { intensity, 0.5f };
         SetShaderValue(meteorShader, shaderLocation, flashVector, SHADER_UNIFORM_VEC2);
 
-        DrawModelEx(meteorModels[i % MAX_METEORS_TEXTURES], meteors[i].pos, (Vector3){0, 1, 0}, 0.0f, meteors[i].scale, WHITE);
+        DrawModelEx(
+            meteorModels[i % MAX_METEORS_TEXTURES],
+            meteors[i].pos,
+            meteors[i].rotationAxis,
+            meteors[i].rotationAngle,
+            meteors[i].scale,
+            WHITE);
     }
 }
 

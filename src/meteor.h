@@ -11,6 +11,7 @@
 typedef struct {
     float speed;
     float rotationAngle;
+    float rotationSpeed;
     float hitTimer;
     Vector3 pos;
     Vector3 scale;
