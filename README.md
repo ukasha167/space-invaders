@@ -1,5 +1,9 @@
 # Space Shooters
 
+<p align="center">
+  <img src="./assets/demo.gif" alt="Demo" width="700"/>
+</p>
+
 A high-performance, Synthwave-inspired 3D space shooter built in **C** using **Raylib**. Implements a **Data-Oriented Design (DOD)** architecture with a custom rendering pipeline and optimized collision mathematics.
 
 ---
