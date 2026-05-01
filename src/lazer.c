@@ -21,7 +21,7 @@ void spawnLazer(Vector3 shipPos, float shipSpeed) {
     for (int i = 0; i < MAX_LAZERS_COUNT; i++) {
         if (lazers[i].isActive == false) {
             lazers[i].pos = shipPos;
-            lazers[i].speed = 30.0f + shipSpeed;
+            lazers[i].speed = 50.0f + shipSpeed;
             lazers[i].isActive = true;
             return;
         }
