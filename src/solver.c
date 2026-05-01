@@ -65,7 +65,7 @@ void updateGame(const float dt) {
     }
 }
 
-bool checkCollision() {
+bool checkCollision(void) {
     for (int i = 0; i < MAX_LAZERS_COUNT; i++) {
         if (!lazers.isActive[i]) {
             continue;
@@ -75,26 +75,34 @@ bool checkCollision() {
             if (!meteors.isActive[j] || meteors.hitTimer[j] > 0.0f) {
                 continue;
             }
-            if (CheckCollisionSpheres(lazers.pos[i], LAZER_RADIUS,
-                                      meteors.pos[j], METEOR_RADIUS)) {
+
+            if (collisionOccured(lazers.pos[i], meteors.pos[j], LAZER_METEOR_DIST_SQ)) {
                 lazers.isActive[i] = false;
-                meteors.hitTimer[j] = 0.20;
+                meteors.hitTimer[j] = 0.20f;
                 score++;
+                break;
             }
         }
     }
 
     for (int j = 0; j < MAX_METEORS_COUNT; j++) {
-        if (!meteors.isActive[j] || meteors.hitTimer[j] > 0.0f)
+        if (!meteors.isActive[j] || meteors.hitTimer[j] > 0.0f) {
             continue;
+        }
 
-        if (CheckCollisionSpheres(spaceship.pos, SHIP_RADIUS, meteors.pos[j],
-                                  METEOR_RADIUS)) {
+        if (collisionOccured(spaceship.pos, meteors.pos[j], SHIP_METEOR_DIST_SQ)) {
             return true;
         }
     }
 
     return false;
+}
+
+bool collisionOccured(Vector3 a, Vector3 b, float radiiSq) {
+    float dx = a.x - b.x;
+    float dy = a.z - b.z;
+
+    return (dx * dx + dy * dy) <= radiiSq;
 }
 
 void freeSolver() {}
