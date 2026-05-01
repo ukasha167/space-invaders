@@ -65,18 +65,35 @@ void updateGame(const float dt) {
     }
 }
 
-bool checkCollision(void) {
+bool checkCollision() {
     for (int i = 0; i < MAX_LAZERS_COUNT; i++) {
         if (!lazers.isActive[i]) {
             continue;
         }
+
+        float lx = lazers.pos[i].x;
+        float lz = lazers.pos[i].z;
 
         for (int j = 0; j < MAX_METEORS_COUNT; j++) {
             if (!meteors.isActive[j] || meteors.hitTimer[j] > 0.0f) {
                 continue;
             }
 
-            if (collisionOccured(lazers.pos[i], meteors.pos[j], LAZER_METEOR_DIST_SQ)) {
+            float totalRadius =
+                LAZER_RADIUS + (METEOR_RADIUS * meteors.scale[j].x);
+
+            float dx = lx - meteors.pos[j].x;
+            if (dx > totalRadius || dx < -totalRadius) {
+                continue;
+            }
+
+            float dz = lz - meteors.pos[j].z;
+            if (dz > totalRadius || dz < -totalRadius) {
+                continue;
+            }
+
+            float distSq = (dx * dx) + (dz * dz);
+            if (distSq < (totalRadius * totalRadius)) {
                 lazers.isActive[i] = false;
                 meteors.hitTimer[j] = 0.20f;
                 score++;
@@ -85,24 +102,33 @@ bool checkCollision(void) {
         }
     }
 
+    float sx = spaceship.pos.x;
+    float sz = spaceship.pos.z;
+
     for (int j = 0; j < MAX_METEORS_COUNT; j++) {
         if (!meteors.isActive[j] || meteors.hitTimer[j] > 0.0f) {
             continue;
         }
 
-        if (collisionOccured(spaceship.pos, meteors.pos[j], SHIP_METEOR_DIST_SQ)) {
+        float mRadius = METEOR_RADIUS * meteors.scale[j].x;
+        float totalRadius = SHIP_RADIUS + mRadius;
+
+        float dx = sx - meteors.pos[j].x;
+        if (dx > totalRadius || dx < -totalRadius) {
+            continue;
+        }
+
+        float dz = sz - meteors.pos[j].z;
+        if (dz > totalRadius || dz < -totalRadius) {
+            continue;
+        }
+
+        if ((dx * dx) + (dz * dz) < (totalRadius * totalRadius)) {
             return true;
         }
     }
 
     return false;
-}
-
-bool collisionOccured(Vector3 a, Vector3 b, float radiiSq) {
-    float dx = a.x - b.x;
-    float dy = a.z - b.z;
-
-    return (dx * dx + dy * dy) <= radiiSq;
 }
 
 void freeSolver() {}
