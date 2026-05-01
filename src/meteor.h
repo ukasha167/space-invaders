@@ -9,17 +9,17 @@
 #include "defines.h"
 
 typedef struct {
-    Vector3 pos;
-    Vector3 scale;
-    Vector3 rotationAxis;
-    float speed;
-    float rotationAngle;
-    float rotationSpeed;
-    float hitTimer;
-    bool isActive;
+    Vector3 pos[MAX_METEORS_COUNT];
+    Vector3 scale[MAX_METEORS_COUNT];
+    Vector3 rotationAxis[MAX_METEORS_COUNT];
+    float speed[MAX_METEORS_COUNT];
+    float rotationAngle[MAX_METEORS_COUNT];
+    float rotationSpeed[MAX_METEORS_COUNT];
+    float hitTimer[MAX_METEORS_COUNT];
+    bool isActive[MAX_METEORS_COUNT];
 } Meteor;
 
-extern Meteor meteors[];
+extern Meteor meteors;
 
 void initMeteor();
 void spawnMeteor(const int idx);

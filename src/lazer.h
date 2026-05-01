@@ -6,15 +6,15 @@
 #include "spaceship.h"
 
 typedef struct {
-    Vector3 pos;
-    Vector3 scale;
-    Vector3 rotationAxis;
-    float speed;
-    float rotationAngle;
-    bool isActive;
+    Vector3 pos[MAX_LAZERS_COUNT];
+    Vector3 scale[MAX_LAZERS_COUNT];
+    Vector3 rotationAxis[MAX_LAZERS_COUNT];
+    float speed[MAX_LAZERS_COUNT];
+    float rotationAngle[MAX_LAZERS_COUNT];
+    bool isActive[MAX_LAZERS_COUNT];
 } Lazer;
 
-extern Lazer lazers[];
+extern Lazer lazers;
 
 void initLazer();
 void loadLazerModel();
