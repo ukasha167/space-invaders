@@ -55,15 +55,15 @@ void renderGame() {
     switch (state) {
     case MENU:
         DrawRectangle(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, Fade(BLACK, 0.6f));
-        DrawTexture(title, (SCREEN_WIDTH >> 1) - (title.width >> 1), 20, WHITE);
+        DrawTexture(title, (SCREEN_WIDTH >> 1) - (title.width >> 1), 75, WHITE);
         DrawTextureEx(play, (Vector2){(SCREEN_WIDTH >> 1) - ((int)(play.width * 0.5) >> 1), SCREEN_HEIGHT - 250}, 0.0f, 0.5f, WHITE);
         break;
 
     case OVER:
         DrawRectangleGradientV(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, Fade(BLACK, 0.8f), Fade(RED, 0.4f));
-        DrawTexture(over, (SCREEN_WIDTH >> 1) - (over.width >> 1), 20, WHITE);
+        DrawTexture(over, (SCREEN_WIDTH >> 1) - (over.width >> 1), 75, WHITE);
         DrawTextureEx(play, (Vector2){(SCREEN_WIDTH >> 1) - ((int)(play.width * 0.5) >> 1), SCREEN_HEIGHT - 250}, 0.0f, 0.5f, WHITE);
-        DrawText(TextFormat("SCORE: %3d", score), SCREEN_WIDTH - 200, 10, 34, WHITE);
+        DrawText(TextFormat("SCORE: %3d", score), SCREEN_WIDTH - 200, 10, 34, Fade(RED, 0.8f));
         break;
 
     case PLAYING:
