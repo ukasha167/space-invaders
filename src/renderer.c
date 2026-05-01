@@ -1,7 +1,4 @@
 #include "renderer.h"
-#include "defines.h"
-#include "raylib.h"
-#include "solver.h"
 
 static Texture title;
 static Texture play;
