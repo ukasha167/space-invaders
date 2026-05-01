@@ -1,7 +1,9 @@
 #include "meteor.h"
 
+static Shader meteorShader;
 static Model meteorModels[MAX_METEORS_TEXTURES];
 static Texture2D meteorTextures[MAX_METEORS_TEXTURES];
+static int shaderLocation;
 
 Meteor meteors[MAX_METEORS_COUNT];
 
@@ -28,17 +30,18 @@ void loadMeteorModel() {
     const char TEXTURES[MAX_METEORS_TEXTURES][15] = {"red.png",    "green.png",
                                                      "light.png",  "orange.png",
                                                      "purple.png", "dark.png"};
-    char path[45];
+
+    meteorShader = LoadShader(0, "../assets/assets3D/shaders/flash.fs");
+    shaderLocation = GetShaderLocation(meteorShader, "flash");
 
     for (int i = 0; i < MAX_METEORS_TEXTURES; i++) {
         meteorModels[i] = LoadModelFromMesh(mesh);
 
-        const char *path =
-            TextFormat("../assets/assets3D/textures/%s", TEXTURES[i]);
+        const char *path = TextFormat("../assets/assets3D/textures/%s", TEXTURES[i]);
         meteorTextures[i] = LoadTexture(path);
 
-        meteorModels[i].materials[0].maps[MATERIAL_MAP_DIFFUSE].texture =
-            meteorTextures[i];
+        meteorModels[i].materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = meteorTextures[i];
+        meteorModels[i].materials[0].shader = meteorShader;
     }
 }
 
@@ -48,9 +51,18 @@ void updateMeteor(const float dt) {
     for (int i = 0; i < MAX_METEORS_COUNT; i++) {
         if (!meteors[i].isActive || meteors[i].pos.z > outsideBoundary) {
             spawnMeteor(i);
+            meteors[i].hitTimer = 0.0f;
+            continue;
+        } else {
+            meteors[i].pos.z += meteors[i].speed * dt;
         }
 
-        meteors[i].pos.z += meteors[i].speed * dt;
+        if (meteors[i].hitTimer > 0) {
+            meteors[i].hitTimer -= dt;
+            if (meteors[i].hitTimer <= 0) {
+                meteors[i].isActive = false;
+            }
+        }
     }
 }
 
@@ -59,9 +71,12 @@ void drawMeteor() {
         if (!meteors[i].isActive) {
             continue;
         }
+        float intensity = (meteors[i].hitTimer > 0.0f) ? (meteors[i].hitTimer * 10.0f) : 0.0f;
 
-        DrawModelEx(meteorModels[i % MAX_METEORS_TEXTURES], meteors[i].pos,
-                    (Vector3){0, 1, 0}, 0.0f, meteors[i].scale, WHITE);
+        float flashVector[2] = { intensity, 0.5f };
+        SetShaderValue(meteorShader, shaderLocation, flashVector, SHADER_UNIFORM_VEC2);
+
+        DrawModelEx(meteorModels[i % MAX_METEORS_TEXTURES], meteors[i].pos, (Vector3){0, 1, 0}, 0.0f, meteors[i].scale, WHITE);
     }
 }
 
@@ -74,4 +89,6 @@ void freeMeteor() {
         UnloadTexture(meteorTextures[i]);
         UnloadModel(meteorModels[i]);
     }
+
+    UnloadShader(meteorShader);
 }
